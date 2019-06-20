@@ -1,0 +1,25 @@
+# RSA
+rsa/
+*.pem
+
+# LOGS
+*.log
+
+# Client
+sym_api_client_python.egg-info/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pycharm files
+.idea/
+
+# Application config files
+config.json
+config_Symp.json
+config_corp.json
+config_sup.json
+config_preview.json
+config_dev2.json
