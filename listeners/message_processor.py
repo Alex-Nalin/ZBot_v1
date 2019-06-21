@@ -25,6 +25,7 @@ class MessageProcessor:
         streamType = msg['stream']['streamType']
         print("User ID: " + str(userId) + " Full name: " + str(firstName) + " " + str(lastName))
         print("Stream ID: " + str(streamId) + " Stream Type: " + str(streamType))
+        print("Testing sync between GitHub and GitLab")
 
         msg_xml = msg['message']
         # This give the full message div
