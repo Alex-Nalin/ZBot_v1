@@ -1,5 +1,5 @@
 from .im_listener import IMListener
-from .simple_message_processor import MessageProcessor
+from .message_processor import MessageProcessor
 import logging
 # A sample implementation of Abstract imListener class
 # The listener can respond to incoming events if the respective event

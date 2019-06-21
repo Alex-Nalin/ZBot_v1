@@ -22,15 +22,10 @@ import logging
 from sym_api_client_python.configure.configure import SymConfig
 from sym_api_client_python.auth.rsa_auth import SymBotRSAAuth
 from sym_api_client_python.clients.sym_bot_client import SymBotClient
-# from sym_api_client_python.listeners.\
-#         im_listener_test_imp import IMListenerTestImp
-# from sym_api_client_python.listeners.\
-#         room_listener_test_imp import RoomListenerTestImp
-
-from listeners. \
-        im_listener_test_imp import IMListenerTestImp
-from listeners. \
-        room_listener_test_imp import RoomListenerTestImp
+# from sym_api_client_python.listeners.im_listener_test_imp import IMListenerTestImp
+# from sym_api_client_python.listeners.room_listener_test_imp import RoomListenerTestImp
+from listeners.im_listener_test_imp import IMListenerTestImp
+from listeners.room_listener_test_imp import RoomListenerTestImp
 
 def configure_logging():
         logging.basicConfig(
@@ -56,6 +51,9 @@ def main():
         # Initialize SymBotClient with auth and configure objects
         bot_client = SymBotClient(auth, configure)
 
+        #msg_client = bot_client.get_message_client()
+        #msg_client.send_msg(stream_id, message_to_send)
+
         # Initialize datafeed service
         datafeed_event_service = bot_client.get_datafeed_event_service()
 
@@ -71,6 +69,8 @@ def main():
         # Create and read the datafeed
         print('Starting datafeed')
         datafeed_event_service.start_datafeed()
+        print(datafeed_event_service.datafeed_id)
+        print(datafeed_event_service.datafeed_client)
 
 
 if __name__ == "__main__":

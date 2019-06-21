@@ -5,6 +5,9 @@ rsa/
 # LOGS
 *.log
 
+# EXAMPLES
+examples/
+
 # Client
 sym_api_client_python.egg-info/
 
