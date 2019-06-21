@@ -17,6 +17,15 @@ class MessageProcessor:
         self.bot_client = bot_client
 
     def process(self, msg):
+
+        firstName = msg['user']['firstName']
+        lastName = msg['user']['lastName']
+        userId = msg['user']['userId']
+        streamId = msg['stream']['streamId']
+        streamType = msg['stream']['streamType']
+        print("User ID: " + str(userId) + " Full name: " + str(firstName) + " " + str(lastName))
+        print("Stream ID: " + str(streamId) + " Stream Type: " + str(streamType))
+
         msg_xml = msg['message']
         # This give the full message div
         #print("msg_xml: " + msg_xml)
