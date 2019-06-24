@@ -47,7 +47,10 @@ class MessageProcessor:
 
         print("msg_txt: " + msg_text)
 
-        if '/bot' in msg_text and 'joke' in msg_text:
+        if "/help" in msg_text:
+            messageItem.command = "help"
+
+        elif '/bot' in msg_text and 'joke' in msg_text:
             joke_client = punchJoke(self.bot_client)
             stream_id = msg['stream']['streamId']
             joke_client.send_joke(stream_id)
@@ -55,6 +58,9 @@ class MessageProcessor:
 
         elif "/jokes" in msg_text:
             messageItem.command = "jokes"
+
+        elif "/funQuote" in msg_text:
+            messageItem.command = "funQuote"
 
         #if msg_txt == "/Test":
         elif "/Test" in msg_text:

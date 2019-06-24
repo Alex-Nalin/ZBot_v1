@@ -28,6 +28,71 @@ def remove_emoji(emoji):
                                "]+", flags=re.UNICODE)
     return emoji_pattern.sub(r'', emoji.decode("utf-8"))
 
+class Help:
+
+    def __init__(self, bot_client):
+        self.bot_client = bot_client
+
+    def help(self):
+
+        displayHelp = "<h2>Bot Help</h2> \
+                        <card accent='tempo-bg-color--blue' iconSrc=''> \
+                            <header><h2>Bot Commands</h2></header> \
+                            <body> \
+                              <table> \
+                                <thead> \
+                                  <tr> \
+                                    <td>Command</td> \
+                                    <td>Usage</td> \
+                                    <td>Description</td> \
+                                    <td>Permission</td> \
+                                  </tr> \
+                                </thead> \
+                                <tbody> \
+                                  <tr> \
+                                    <td>/weather</td> \
+                                    <td>/weather location days[0-7]</td> \
+                                    <td>Gives weather forecast up to 7 days, if citi is more than one string, use _</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                  <tr> \
+                                    <td>/gif</td> \
+                                    <td>/gif string</td> \
+                                    <td>Search Giphy for gif randomly or specific if string is provided</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                  <tr> \
+                                    <td>/quoteoftheday</td> \
+                                    <td>/quoteoftheday or /qod</td> \
+                                    <td>Give the Quote of the Day to ponder on</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                  <tr> \
+                                    <td>/bot joke</td> \
+                                    <td>/bot joke</td> \
+                                    <td>Punch line joke call</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                  <tr> \
+                                    <td>/jokes</td> \
+                                    <td>/jokes</td> \
+                                    <td>Gives another API call to a different Joke endpoint</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                  <tr> \
+                                    <td>/funQuote</td> \
+                                    <td>/funQuote</td> \
+                                    <td>Finds Movie and Famous people's Quote</td> \
+                                    <td>All</td> \
+                                  </tr> \
+                                </tbody> \
+                                </table> \
+                                </body> \
+                                </card>"
+
+        #return dict(message='<messageML><div class="wysiwyg">' + displayHelp + '</div></messageML>')
+        return dict(message='<messageML>' + displayHelp + '</messageML>')
+
 class punchJoke:
 
     def __init__(self, bot_client):
