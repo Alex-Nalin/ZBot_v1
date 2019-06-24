@@ -69,9 +69,6 @@ def main():
         # Create and read the datafeed
         print('Starting datafeed')
         datafeed_event_service.start_datafeed()
-        print(datafeed_event_service.datafeed_id)
-        print(datafeed_event_service.datafeed_client)
-
 
 if __name__ == "__main__":
     main()

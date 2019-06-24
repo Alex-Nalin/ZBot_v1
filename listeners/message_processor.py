@@ -3,12 +3,22 @@ import os
 import codecs
 import json
 
-from command.command import GetGiphyImage, Joke
+from command.command import punchJoke
 
 ## Adding the variable from config.json file
 _configPath = os.path.abspath('../command/config.json')
 with codecs.open(_configPath, 'r', 'utf-8-sig') as json_file:
     _config = json.load(json_file)
+
+class MessageItem:
+
+    def __init__(self):
+
+        self.firstname = ""
+        self.lastname = ""
+        self.streamID = ""
+        self.command = ""
+        self.msg_text = ""
 
 """This will process the message posted in Symphony UI"""
 class MessageProcessor:
@@ -18,44 +28,63 @@ class MessageProcessor:
 
     def process(self, msg):
 
-        firstName = msg['user']['firstName']
-        lastName = msg['user']['lastName']
-        userId = msg['user']['userId']
-        streamId = msg['stream']['streamId']
-        streamType = msg['stream']['streamType']
-        print("User ID: " + str(userId) + " Full name: " + str(firstName) + " " + str(lastName))
-        print("Stream ID: " + str(streamId) + " Stream Type: " + str(streamType))
-        print("Testing sync between GitHub and GitLab")
+        messageItem = MessageItem()
+
+        messageItem.firstname = msg['user']['firstName']
+        messageItem.lastname = msg['user']['lastName']
+        messageItem.userID = msg['user']['userId']
+        messageItem.streamID = msg['stream']['streamId']
+        messageItem.streamType = msg['stream']['streamType']
+
+        print("--> User ID: " + str(messageItem.userID) + " & full name: " + str(messageItem.firstname) + " " + str(messageItem.lastname))
+        print("--> Stream Type: " + str(messageItem.streamType) + " with stream ID: " + str(messageItem.streamID))
 
         msg_xml = msg['message']
-        # This give the full message div
-        #print("msg_xml: " + msg_xml)
         msg_root = ET.fromstring(msg_xml)
-        msg_txt = msg_root[0].text
-        #print("msg_txt: " + msg_txt)
+        messageItem.msg_text = msg_root[0].text
 
-        if '/bot' in msg_txt and 'joke' in msg_txt:
-            joke_client = Joke(self.bot_client)
+        msg_text = messageItem.msg_text
+
+        print("msg_txt: " + msg_text)
+
+        if '/bot' in msg_text and 'joke' in msg_text:
+            joke_client = punchJoke(self.bot_client)
             stream_id = msg['stream']['streamId']
             joke_client.send_joke(stream_id)
 
 
+        elif "/jokes" in msg_text:
+            messageItem.command = "jokes"
+
         #if msg_txt == "/Test":
-        elif "/Test" in msg_txt:
+        elif "/Test" in msg_text:
 
-            messagetosend = "Hey Whats up"
+            messagetosend = "Hey Whats up " + messageItem.firstname
             msg_to_send = dict(message='<messageML>' + messagetosend + '</messageML>')
-
             stream_id = msg['stream']['streamId']
             self.bot_client.get_message_client().send_msg(stream_id, msg_to_send)
 
+            # messagetosend = "Hey Whats up " + messageItem.firstname + " dude"
+            # msg_to_send = dict(message='<messageML>' + messagetosend + '</messageML>')
+            # stream_id = msg['stream']['streamId']
+            # self.bot_client.get_message_client().send_msg(stream_id, msg_to_send)
+            # messageItem.command = "test"
+
+        # elif "/quoteoftheday" in msg_text or "/qod" in msg_text:
+        elif msg_text == "/quoteoftheday" or msg_text == "/qod":
+            messageItem.command = "quoteoftheday"
+
+        elif "/wiki" in msg_text:
+            messageItem.command = "wiki"
 
         #elif msg_txt == "/gif":
-        elif "/gif" in msg_txt:
+        elif "/gif" in msg_text:
+            messageItem.command = "giphy"
+
             #print(msg_txt)
-            GetGiphy_client = GetGiphyImage(self.bot_client)
-            stream_id = msg['stream']['streamId']
-            GetGiphy_client.send_giphy(stream_id)
+            # GetGiphy_client = GetGiphyImage(self.bot_client)
+            # stream_id = msg['stream']['streamId']
+            # GetGiphy_client.send_giphy(stream_id)
 
             # try:
             #     giphyAPIKey = _config['giphy']['apikey']
@@ -116,10 +145,14 @@ class MessageProcessor:
             #     stream_id = msg['stream']['streamId']
             #     self.bot_client.get_message_client().send_msg(stream_id, msg_to_send)
 
+        elif "/weather" in msg_text:
+            messageItem.command = "weather"
+
+
         else:
             stream_id = msg['stream']['streamId']
             messagetosend = "What are you doing?"
             msg_to_send = dict(message='<messageML>' + messagetosend + '</messageML>')
             self.bot_client.get_message_client().send_msg(stream_id, msg_to_send)
 
-        return msg_txt
+        return messageItem

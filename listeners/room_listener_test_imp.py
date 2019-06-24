@@ -1,6 +1,7 @@
 import logging
 from .room_listener import RoomListener
 from .message_processor import MessageProcessor
+import command.command as cmd
 # A sample implementation of Abstract RoomListener class
 # The listener can respond to incoming events if the respective event
 # handler has been implemented
@@ -19,7 +20,32 @@ class RoomListenerTestImp(RoomListener):
     def on_room_msg(self, msg):
         logging.debug('room msg received', msg)
         msg_processor = MessageProcessor(self.bot_client)
-        msg_processor.process(msg)
+        messageItem = msg_processor.process(msg)
+
+        if messageItem.command == "giphy":
+            giphy_client = cmd.GetGiphyImage(self.bot_client)
+            message2ui = giphy_client.GetGiphy(messageItem.msg_text)
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
+        if messageItem.command == "wiki":
+            wiki_client = cmd.WikiSearch(self.bot_client)
+            message2ui = wiki_client.wiki(messageItem.msg_text)
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
+        if messageItem.command == "quoteoftheday":
+            quoteoftheday_client = cmd.QuoteOftheDay(self.bot_client)
+            message2ui = quoteoftheday_client.QoD()
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
+        if messageItem.command == "weather":
+            weather_client = cmd.Weather(self.bot_client)
+            message2ui = weather_client.weather(messageItem.msg_text)
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
 
     def on_room_created(self, room_created):
         logging.debug('room created', room_created)
