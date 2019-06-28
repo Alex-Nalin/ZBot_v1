@@ -35,8 +35,9 @@ class Help:
 
     def help(self):
 
-        displayHelp = "<h2>Bot Help</h2> \
-                        <card accent='tempo-bg-color--blue' iconSrc=''> \
+        #"<h2>Bot Help</h2> \
+
+        displayHelp = "<card accent='tempo-bg-color--blue' iconSrc=''> \
                             <header><h2>Bot Commands</h2></header> \
                             <body> \
                               <table> \
@@ -87,8 +88,8 @@ class Help:
                                   </tr> \
                                 </tbody> \
                                 </table> \
-                                </body> \
-                                </card>"
+                            </body> \
+                        </card>"
 
         #return dict(message='<messageML><div class="wysiwyg">' + displayHelp + '</div></messageML>')
         return dict(message='<messageML>' + displayHelp + '</messageML>')
