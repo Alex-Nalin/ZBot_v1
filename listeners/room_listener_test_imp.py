@@ -22,9 +22,27 @@ class RoomListenerTestImp(RoomListener):
         msg_processor = MessageProcessor(self.bot_client)
         messageItem = msg_processor.process(msg)
 
+        if messageItem.command == "help":
+            help_client = cmd.Help(self.bot_client)
+            message2ui = help_client.help()
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
         if messageItem.command == "giphy":
             giphy_client = cmd.GetGiphyImage(self.bot_client)
             message2ui = giphy_client.GetGiphy(messageItem.msg_text)
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
+        if messageItem.command == "jokes":
+            jokes_client = cmd.Jokes(self.bot_client)
+            message2ui = jokes_client.getJokes()
+            print("message2ui: " + str(message2ui))
+            self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
+
+        if messageItem.command == "funQuote":
+            funQuote_client = cmd.FunQuote(self.bot_client)
+            message2ui = funQuote_client.funQuote()
             print("message2ui: " + str(message2ui))
             self.bot_client.get_message_client().send_msg(messageItem.streamID, message2ui)
 
