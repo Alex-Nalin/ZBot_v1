@@ -2,8 +2,10 @@ import xml.etree.ElementTree as ET
 import os
 import codecs
 import json
+import requests
+import logging
 
-from command.command import punchJoke
+from command.command import punchJoke, GetGiphyImage
 
 ## Adding the variable from config.json file
 _configPath = os.path.abspath('../command/config.json')
@@ -87,11 +89,11 @@ class MessageProcessor:
         elif "/gif" in msg_text:
             messageItem.command = "giphy"
 
-            #print(msg_txt)
+            # print(msg_text)
             # GetGiphy_client = GetGiphyImage(self.bot_client)
             # stream_id = msg['stream']['streamId']
-            # GetGiphy_client.send_giphy(stream_id)
-
+            # #GetGiphy_client.send_giphy(stream_id)
+            #
             # try:
             #     giphyAPIKey = _config['giphy']['apikey']
             #
@@ -153,7 +155,6 @@ class MessageProcessor:
 
         elif "/weather" in msg_text:
             messageItem.command = "weather"
-
 
         else:
             stream_id = msg['stream']['streamId']
